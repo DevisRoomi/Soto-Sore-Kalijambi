@@ -90,11 +90,13 @@ function calculateOrder(cleanInput) {
   return { parsed, items, total, suggestion };
 }
 
-function buildOrderMessage(raw) {
+function buildOrderMessage(raw, schedule) {
   const clean = normalizeText(raw);
   const { items, total, suggestion, parsed } = calculateOrder(clean);
+  const scheduleLine = schedule && schedule !== 'Hari ini' ? `Waktu Pemesanan: ${schedule}` : 'Waktu Pemesanan: Hari ini';
   if (items.length > 0) {
     const lines = ['Halo Soto Sore, saya mau pesan:'];
+    lines.push(`📅 ${scheduleLine}`);
     lines.push('');
     for (const item of items) {
       const detail = [item.varian, item.catatan].filter(Boolean).join(', ');
@@ -116,21 +118,23 @@ function buildOrderMessage(raw) {
     };
   }
   return {
-    text: `Halo Soto Sore, saya mau tanya/pesan:\n\n${clean}\n\nMohon dibantu info ya. Terima kasih.`,
+    text: `Halo Soto Sore, saya mau tanya/pesan:\n📅 ${scheduleLine}\n\n${clean}\n\nMohon dibantu info ya. Terima kasih.`,
     total: 0,
     suggestion: '',
     provider: 'local-fallback'
   };
 }
 
-async function assistOrder(text) {
+async function assistOrder(text, schedule) {
   const cleanInput = normalizeText(text);
   const { items, total, suggestion, parsed } = calculateOrder(cleanInput);
+  const scheduleLine = schedule && schedule !== 'Hari ini' ? schedule : 'Hari ini';
   const key = process.env.GEMINI_API_KEY;
   if (key && items.length > 0) {
     const prompt = `Kamu Idzkar Soto Agent untuk warung Soto Sore Kalijambi.
 Daftar pesanan terdeteksi:
 ${items.map(it => `- ${it.qty}x ${it.item} (Subtotal: Rp${it.subtotal})`).join('\n')}
+Waktu Pengambilan / Pesanan: ${scheduleLine}
 Estimasi hitungan total: Rp${total}
 Rekomendasi sugesti menu: ${suggestion || 'Tidak ada'}
 Pesan asli pelanggan:
@@ -138,9 +142,10 @@ ${cleanInput}
 
 Tugas:
 1. Buat format pesan WhatsApp pemesanan yang rapi, sopan, dan hangat.
-2. Cantumkan rincian item, jumlah, catatan/varian, serta cantumkan estimasi total: Rp${total.toLocaleString('id-ID')}.
-3. Tuliskan 1 baris rekomendasi sugesti pelengkap/minuman jika ada.
-4. Output HANYA teks bersih siap kirim ke WhatsApp tanpa markdown tebal berlebihan atau escape slash n.`;
+2. WAJIB cantumkan baris waktu pemesanan (contoh: "Waktu: ${scheduleLine}"). Jika hari ini, tuliskan "Waktu: Hari ini".
+3. Cantumkan rincian item, jumlah, catatan/varian, serta cantumkan estimasi total: Rp${total.toLocaleString('id-ID')}.
+4. Tuliskan 1 baris rekomendasi sugesti pelengkap/minuman jika ada.
+5. Output HANYA teks bersih siap kirim ke WhatsApp tanpa markdown tebal berlebihan atau escape slash n.`;
 
     for (const model of ['gemini-2.5-flash', 'gemini-flash-latest']) {
       try {
@@ -168,7 +173,7 @@ Tugas:
       } catch {}
     }
   }
-  return buildOrderMessage(cleanInput);
+  return buildOrderMessage(cleanInput, schedule);
 }
 
 function staticFile(pathname) {
@@ -189,7 +194,7 @@ Bun.serve({ port, async fetch(req) {
     let body;
     try { body = await req.json(); } catch { return json({ error: 'Body JSON tidak valid.' }, 400); }
     if (typeof body.text !== 'string' || body.text.trim().length < 3 || body.text.length > 2000) return json({ error: 'Pesanan wajib berupa teks 3–2.000 karakter.' }, 400);
-    try { return json(await assistOrder(body.text.trim())); } catch (error) { return json({ error: 'AI sedang tidak tersedia.', detail: error.message }, 502); }
+    try { return json(await assistOrder(body.text.trim(), body.schedule)); } catch (error) { return json({ error: 'AI sedang tidak tersedia.', detail: error.message }, 502); }
   }
   try { return staticFile(url.pathname); } catch { return new Response('Not found', { status: 404 }); }
 }});

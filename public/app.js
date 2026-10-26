@@ -25,15 +25,60 @@ function renderTicket(data) {
   ticket.className = 'ticket';
   ticket.innerHTML = `<div class="ticket-top"><span>SOTO SORE KALIJAMBI</span><span>● READY</span></div><div class="ticket-content">${content || '<p>Tidak ada item dikenali.</p>'}${unknown}</div><div class="ticket-bottom">PERIKSA TIKET SEBELUM DIRACIK</div>`;
 }
+// Schedule toggle logic
+let scheduleMode = 'today';
+const chipBtns = document.querySelectorAll('.chip-btn');
+const scheduleInputs = document.querySelector('#schedule-inputs');
+const dateInput = document.querySelector('#order-date');
+const timeInput = document.querySelector('#order-time');
+
+if (dateInput) {
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.min = today;
+  dateInput.value = today;
+}
+
+chipBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    chipBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    scheduleMode = btn.dataset.time;
+    if (scheduleMode === 'later') {
+      scheduleInputs.classList.remove('hidden');
+    } else {
+      scheduleInputs.classList.add('hidden');
+    }
+  });
+});
+
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const order = input.value.trim().replace(/\\s+/g, ' ');
+  const order = input.value.trim().replace(/\s+/g, ' ');
   if (order.length < 3) return;
   const button = form.querySelector('button');
   button.disabled = true;
   status.textContent = 'Idzkar sedang merapikan…';
+  
+  // Format waktu pesanan
+  let scheduleText = 'Hari ini';
+  if (scheduleMode === 'later') {
+    const dVal = dateInput ? dateInput.value : '';
+    const tVal = timeInput ? timeInput.value : '';
+    if (dVal && tVal) {
+      scheduleText = `${dVal} pukul ${tVal} WIB`;
+    } else if (dVal) {
+      scheduleText = `Tanggal ${dVal}`;
+    } else if (tVal) {
+      scheduleText = `Hari ini pukul ${tVal} WIB`;
+    }
+  }
+
   try {
-    const response = await fetch('/api/orders/assist', { method: 'POST', headers: {'content-type':'application/json'}, body: JSON.stringify({text: order}) });
+    const response = await fetch('/api/orders/assist', {
+      method: 'POST',
+      headers: {'content-type':'application/json'},
+      body: JSON.stringify({text: order, schedule: scheduleText})
+    });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'AI sedang tidak tersedia.');
     const rawText = String(data.text || '').replace(/\\r\\n/g, '\n').replace(/\\n/g, '\n').replace(/\r\n/g, '\n').trim();

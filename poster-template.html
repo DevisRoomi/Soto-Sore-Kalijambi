@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@500;700&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: #19120e;
+    color: #fffdf9;
+    font-family: 'DM Sans', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background subtle grid pattern */
+  .bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(247, 241, 232, 0.06) 1.5px, transparent 1.5px);
+    background-size: 32px 32px;
+    z-index: 1;
+  }
+
+  /* Top badge & branding */
+  .header {
+    position: absolute;
+    top: 55px;
+    left: 70px;
+    right: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+  }
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .brand-mark {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    background: #b94c32;
+    display: grid;
+    place-items: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(185, 76, 50, 0.4);
+  }
+  .brand-text h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .brand-text span {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: #e59e1b;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .badge-tag {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    border-radius: 99px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: #f7ede2;
+  }
+
+  /* Main Headline */
+  .headline-container {
+    position: absolute;
+    top: 145px;
+    left: 70px;
+    right: 70px;
+    z-index: 10;
+  }
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.16em;
+    color: #e59e1b;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: #e59e1b;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 68px;
+    line-height: 1.04;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #fffdf9;
+  }
+  h1 em {
+    font-style: italic;
+    color: #f5bd82;
+  }
+
+  /* Hero Food Visual Presentation */
+  .visual-card {
+    position: absolute;
+    top: 360px;
+    left: 70px;
+    right: 70px;
+    height: 480px;
+    border-radius: 36px;
+    overflow: hidden;
+    z-index: 5;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.14);
+  }
+  .visual-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .visual-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(18,11,8,0.1) 0%, rgba(18,11,8,0.78) 100%);
+  }
+  .price-pill {
+    position: absolute;
+    bottom: 28px;
+    left: 32px;
+    background: #b94c32;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 99px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    box-shadow: 0 8px 24px rgba(185, 76, 50, 0.5);
+  }
+  .price-pill span {
+    font-size: 14px;
+    font-family: 'DM Mono', monospace;
+    opacity: 0.9;
+  }
+  .price-pill strong {
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  .visual-badge {
+    position: absolute;
+    bottom: 28px;
+    right: 32px;
+    background: rgba(25, 18, 14, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 99px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: #f7ede2;
+  }
+
+  /* Bottom Interactive & QR Area */
+  .bottom-section {
+    position: absolute;
+    bottom: 60px;
+    left: 70px;
+    right: 70px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 30px;
+    z-index: 10;
+  }
+
+  /* Feature Box */
+  .feature-box {
+    background: rgba(36, 26, 21, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+    padding: 32px 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.3);
+  }
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+  .feature-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #c9bcaf;
+    margin-bottom: 20px;
+  }
+  .feature-pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .feature-pill-item {
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: #f5bd82;
+  }
+
+  /* QR Box Call to Action */
+  .qr-box {
+    background: #fffdf9;
+    color: #201511;
+    border-radius: 28px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 20px 48px rgba(0,0,0,0.45);
+    border: 2px solid #ecd8c2;
+  }
+  .qr-image-wrap {
+    width: 220px;
+    height: 220px;
+    background: #fff;
+    border-radius: 18px;
+    padding: 10px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #ebdccb;
+  }
+  .qr-image-wrap img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .qr-label {
+    margin-top: 14px;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .qr-sub {
+    margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: #b94c32;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .qr-url {
+    margin-top: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #7a6e65;
+  }
+</style>
+</head>
+<body>
+<div class="bg-pattern"></div>
+
+<div class="header">
+  <div class="brand-group">
+    <div class="brand-mark">SS</div>
+    <div class="brand-text">
+      <h3>Soto Sore Kalijambi</h3>
+      <span>Warung Soto Tradisional</span>
+    </div>
+  </div>
+  <div class="badge-tag">ASISTEN AI: IDZKAR ACTIVE</div>
+</div>
+
+<div class="headline-container">
+  <p class="eyebrow">HANGATNYA RASA • PULANGNYA HATI</p>
+  <h1>Semangkuk Soto Gurih,<br><em>Pesan Mudah via Asisten AI.</em></h1>
+</div>
+
+<div class="visual-card">
+  <img src="C:/Users/Lenovo/Desktop/soto sore/public/assets/soto-bowl-meja.jpeg" alt="Semangkuk Soto Ayam Gurih Hangat">
+  <div class="visual-overlay"></div>
+  <div class="price-pill">
+    <span>Mulai</span>
+    <strong>Rp4.000</strong>
+  </div>
+  <div class="visual-badge">Porsi Kecil Rp4k • Porsi Besar Rp8k</div>
+</div>
+
+<div class="bottom-section">
+  <div class="feature-box">
+    <div>
+      <h3 class="feature-title">Pesan Makan di Tempat atau Bawa Pulang</h3>
+      <p class="feature-desc">Nikmati kuah kaldu rempah hangat segar di warung, atau pesan lebih awal tanpa antre. Cukup ketik pesanan santai, AI Idzkar otomatis hitungkan estimasi harga dan format rapi ke WhatsApp warung.</p>
+    </div>
+    <div class="feature-pills">
+      <span class="feature-pill-item">✓ Bisa Jadwalkan Jam Makan</span>
+      <span class="feature-pill-item">✓ Langsung Format ke WhatsApp</span>
+      <span class="feature-pill-item">✓ Navigasi Google Maps Presisi</span>
+    </div>
+  </div>
+
+  <div class="qr-box">
+    <div class="qr-image-wrap">
+      <img src="C:/Users/Lenovo/Desktop/soto sore/public/assets/qr-website-soto.png" alt="Scan QR Website">
+    </div>
+    <div class="qr-label">SCAN MENU & PESAN</div>
+    <div class="qr-sub">Buka Website Resmi Warung</div>
+    <div class="qr-url">soto-sore-kalijambe.netlify.app</div>
+  </div>
+</div>
+</body>
+</html>
