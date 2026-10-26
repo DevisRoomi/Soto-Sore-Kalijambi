@@ -17,12 +17,28 @@
     <ellipse cx="80" cy="66" rx="52" ry="12" fill="#fffdf9" stroke="#33241b" stroke-width="4.5"/>
     <ellipse cx="80" cy="66" rx="49" ry="9" fill="none" stroke="#ba3222" stroke-width="2.5"/>
 
-    <!-- Isi Kuah Kuning Gurih & Mie Hangat -->
-    <ellipse cx="80" cy="67" rx="44" ry="7.5" fill="#f5c258"/>
+    <!-- Kuah Kaldu Soto Segar (Tanpa Mie) -->
+    <ellipse cx="80" cy="67" rx="44" ry="7.8" fill="#dfa441"/>
+
+    <!-- Isian Asli Soto Ayam: Suwiran Daging Ayam & Tauge Segar -->
+    <!-- Suwiran Daging Ayam -->
+    <path d="M 68 64 Q 74 62 82 65 Q 76 67 68 64 Z" fill="#fff8e7" stroke="#e0caa3" stroke-width="1"/>
+    <path d="M 86 65 Q 94 63 99 66 Q 92 68 86 65 Z" fill="#fff8e7" stroke="#e0caa3" stroke-width="1"/>
+    <path d="M 60 67 Q 66 65 72 68 Q 65 70 60 67 Z" fill="#fff8e7" stroke="#e0caa3" stroke-width="1"/>
+    <!-- Tauge Renyah -->
+    <path d="M 75 66 Q 77 69 74 71" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    <circle cx="74" cy="71" r="1.2" fill="#d4ddaa"/>
+    <path d="M 88 67 Q 89 70 92 71" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+    <circle cx="92" cy="71" r="1.2" fill="#d4ddaa"/>
     <!-- Lembaran Daun Bawang / Seledri Segar -->
     <ellipse cx="64" cy="66" rx="3.5" ry="1.8" fill="#3f8244" transform="rotate(-15 64 66)"/>
     <ellipse cx="94" cy="67" rx="4" ry="2" fill="#3f8244" transform="rotate(25 94 67)"/>
     <ellipse cx="80" cy="68" rx="3" ry="1.5" fill="#8c5828"/>
+
+    <!-- Sendok Bebek Khas Kuah Soto Hangat Tradisional (Bukan Sumpit) -->
+    <g transform="rotate(20 108 50)">
+      <path d="M 104 32 C 104 26, 110 26, 110 32 L 109 54 C 109 60, 97 64, 94 58 C 91 52, 104 46, 104 32 Z" fill="#fcfbf7" stroke="#33241b" stroke-width="2.5" stroke-linejoin="round"/>
+    </g>
 
     <!-- Lukisan Ayam Jago Khas di Badan Mangkok -->
     <!-- Ekor Ayam Hitam Melengkung Gagah -->
@@ -52,17 +68,9 @@
     <path d="M 103 93 Q 112 91 113 97 Q 106 99 101 96 Z" fill="#3b7a3e"/>
     <path d="M 97 106 Q 104 112 99 115 Q 95 109 96 104 Z" fill="#3b7a3e"/>
 
-    <!-- Tangan Karakter Mengangkat Sumpit & Mie -->
-    <path d="M 104 52 L 68 36" stroke="#c88344" stroke-width="3" stroke-linecap="round"/>
-    <path d="M 106 56 L 66 42" stroke="#b06f34" stroke-width="3" stroke-linecap="round"/>
-    <!-- Untaian Mie Terangkat Hangat -->
-    <path d="M 72 40 Q 75 52 74 65" fill="none" stroke="#f6ce6d" stroke-width="2.8" stroke-linecap="round"/>
-    <path d="M 77 42 Q 79 54 82 66" fill="none" stroke="#f0c258" stroke-width="2.8" stroke-linecap="round"/>
-    <path d="M 82 43 Q 86 52 86 65" fill="none" stroke="#f6ce6d" stroke-width="2.8" stroke-linecap="round"/>
-
     <!-- Uap Panas Mengepul Hangat -->
-    <path d="M 60 28 Q 55 18 62 10" fill="none" stroke="#d48a55" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
-    <path d="M 78 24 Q 72 15 80 7" fill="none" stroke="#ba3222" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
-    <path d="M 96 28 Q 102 18 95 10" fill="none" stroke="#d48a55" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+    <path d="M 60 44 Q 55 30 62 18" fill="none" stroke="#d48a55" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+    <path d="M 78 40 Q 72 26 80 14" fill="none" stroke="#ba3222" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+    <path d="M 96 44 Q 102 30 95 18" fill="none" stroke="#d48a55" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
   </g>
 </svg>
