@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@500;700&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700;1,900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1080px;
+    height: 1350px;
+    background: #140d0a;
+    color: #fffdf9;
+    font-family: 'DM Sans', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Vintage Batik/Tenun Micro-Pattern Background */
+  .bg-pattern {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 50% 12%, rgba(217, 74, 46, 0.28) 0%, transparent 60%),
+      radial-gradient(rgba(247, 241, 232, 0.05) 1.5px, transparent 1.5px);
+    background-size: 100% 100%, 28px 28px;
+    z-index: 1;
+  }
+
+  .top-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #d38b22, #b94c32, #d38b22);
+    z-index: 20;
+  }
+
+  /* Header Branding */
+  .header {
+    position: absolute;
+    top: 48px;
+    left: 64px;
+    right: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+  }
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .mascot-icon {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,0.5));
+  }
+  .brand-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #fffdf9;
+    line-height: 1.05;
+  }
+  .brand-title span {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: #e5a034;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-top: 3px;
+    display: block;
+  }
+
+  .badge-pilihan {
+    background: rgba(185, 76, 50, 0.25);
+    border: 1px solid rgba(229, 160, 52, 0.4);
+    padding: 10px 22px;
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: #f7ede2;
+  }
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #55a868;
+    box-shadow: 0 0 8px #55a868;
+  }
+
+  /* Main Headline */
+  .headline-section {
+    position: absolute;
+    top: 142px;
+    left: 64px;
+    right: 64px;
+    z-index: 10;
+  }
+  .tagline-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    color: #f5bd82;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: #fffdf9;
+  }
+  h1 em {
+    font-style: italic;
+    color: #f5bd82;
+    font-weight: 700;
+  }
+
+  /* Center Stage: Hero Food Photography */
+  .hero-card {
+    position: absolute;
+    top: 330px;
+    left: 64px;
+    right: 64px;
+    height: 520px;
+    border-radius: 36px;
+    overflow: hidden;
+    z-index: 5;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75);
+    border: 2px solid rgba(255, 255, 255, 0.12);
+  }
+  .hero-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-card-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20,13,10,0.08) 0%, rgba(20,13,10,0.85) 100%);
+  }
+
+  /* Floating Badges on Photo */
+  .price-tag-big {
+    position: absolute;
+    bottom: 28px;
+    left: 32px;
+    background: linear-gradient(135deg, #b94c32, #96351d);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 99px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    box-shadow: 0 12px 28px rgba(185, 76, 50, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .price-tag-big span {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: #fed9bf;
+  }
+  .price-tag-big strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 800;
+  }
+
+  .ingredients-badge {
+    position: absolute;
+    bottom: 28px;
+    right: 32px;
+    background: rgba(18, 12, 9, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(245, 189, 130, 0.3);
+    padding: 12px 24px;
+    border-radius: 99px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: #f7ede2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ingredients-badge strong {
+    color: #f5bd82;
+  }
+
+  /* Bottom Split: Highlights + Scannable QR */
+  .bottom-row {
+    position: absolute;
+    bottom: 50px;
+    left: 64px;
+    right: 64px;
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 26px;
+    z-index: 10;
+  }
+
+  .info-card {
+    background: rgba(28, 20, 16, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 30px;
+    padding: 30px 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.35);
+  }
+  .info-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fffdf9;
+    margin-bottom: 10px;
+  }
+  .info-desc {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #cec1b5;
+    margin-bottom: 18px;
+  }
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .feature-item {
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: #f5bd82;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .feature-item span {
+    color: #e5a034;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  /* QR Box Call to Action */
+  .qr-card {
+    background: #fffdf9;
+    color: #1e1410;
+    border-radius: 30px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    border: 2px solid #ecd8c2;
+  }
+  .qr-code-img {
+    width: 220px;
+    height: 220px;
+    background: #fff;
+    border-radius: 18px;
+    padding: 8px;
+    border: 1px solid #e8d7c4;
+    display: block;
+  }
+  .qr-heading {
+    margin-top: 14px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #1a120e;
+  }
+  .qr-subtext {
+    margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: #b94c32;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .qr-site-url {
+    margin-top: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #7a6e65;
+  }
+</style>
+</head>
+<body>
+<div class="top-strip"></div>
+<div class="bg-pattern"></div>
+
+<div class="header">
+  <div class="brand-group">
+    <img class="mascot-icon" src="C:/Users/Lenovo/Desktop/soto sore/public/assets/mascot-ayam-jago.svg" alt="Maskot Ayam Jago Soto Sore">
+    <div class="brand-title">
+      <h2>Soto Sore Kalijambe</h2>
+      <span>Warung Soto Asli Tradisional</span>
+    </div>
+  </div>
+  <div class="badge-pilihan">
+    <span class="badge-dot"></span>
+    <span>IDZKAR AI ONLINE</span>
+  </div>
+</div>
+
+<div class="headline-section">
+  <p class="tagline-eyebrow">HANGATNYA RASA • PULANGNYA HATI</p>
+  <h1>Kuah Kaldu Gurih Segar,<br><em>Racikan Tradisi Sore Hari.</em></h1>
+</div>
+
+<div class="hero-card">
+  <img src="C:/Users/Lenovo/Desktop/soto sore/public/assets/soto-bowl-meja.jpeg" alt="Semangkuk Soto Ayam Gurih Hangat Kalijambe">
+  <div class="hero-card-gradient"></div>
+  <div class="price-tag-big">
+    <span>Mulai</span>
+    <strong>Rp4.000</strong>
+  </div>
+  <div class="ingredients-badge">
+    <span>Porsi Kecil <strong>Rp4k</strong></span>
+    <span>•</span>
+    <span>Porsi Besar <strong>Rp8k</strong></span>
+    <span>•</span>
+    <span>Gorengan <strong>Rp1k</strong></span>
+  </div>
+</div>
+
+<div class="bottom-row">
+  <div class="info-card">
+    <div>
+      <h3 class="info-title">Pesan Praktis via WhatsApp & Web</h3>
+      <p class="info-desc">Kuah kaldu gurih segar bertabur ayam suwir, tauge renyah, seledri, dan bawang goreng renyah tanpa bihun. Nikmati di warung atau jadwalkan jam makanmu tanpa antre.</p>
+    </div>
+    <div class="feature-list">
+      <div class="feature-item"><span>✓</span> Bisa atur jam makan: Makan Hari Ini / Jadwalkan Nanti</div>
+      <div class="feature-item"><span>✓</span> Asisten Idzkar AI hitungkan estimasi total otomatis</div>
+      <div class="feature-item"><span>✓</span> Lokasi warung Kalijambe terhubung langsung Google Maps</div>
+    </div>
+  </div>
+
+  <div class="qr-card">
+    <img class="qr-code-img" src="C:/Users/Lenovo/Desktop/soto sore/public/assets/qr-website-soto.png" alt="Scan QR Code Website">
+    <div class="qr-heading">SCAN & PESAN MENU</div>
+    <div class="qr-subtext">Buka Website Resmi Warung</div>
+    <div class="qr-site-url">soto-sore-kalijambe.netlify.app</div>
+  </div>
+</div>
+</body>
+</html>
